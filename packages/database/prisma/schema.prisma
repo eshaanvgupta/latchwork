@@ -1,0 +1,178 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Organization {
+  id           String    @id @default(uuid())
+  name         String
+  slug         String    @unique
+  ownerAddress String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  services     Service[]
+}
+
+model UserSession {
+  id        String   @id @default(uuid())
+  address   String   @unique
+  nonce     String
+  token     String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Service {
+  id                    String        @id @default(uuid())
+  orgId                 String
+  organization          Organization  @relation(fields: [orgId], references: [id])
+  name                  String
+  slug                  String        @unique
+  description           String
+  upstreamUrl           String
+  category              String
+  isVerified            Boolean       @default(false)
+  verificationChallenge String
+  providerAddress       String
+  status                String        @default("ACTIVE") // ACTIVE, PAUSED, RETIRED
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  plans                 ServicePlan[]
+  agreements            Agreement[]
+}
+
+model ServicePlan {
+  id                String      @id @default(uuid())
+  serviceId         String
+  service           Service     @relation(fields: [serviceId], references: [id])
+  name              String
+  slug              String
+  description       String
+  pricePerEpochUsdc Float
+  requestQuota      Int
+  rateLimitRps      Int
+  slaUptimePpm      Int         @default(995000) // 99.5%
+  slaLatencyMs      Int         @default(250)
+  createdAt         DateTime    @default(now())
+  agreements        Agreement[]
+}
+
+model Agreement {
+  id                   String        @id // on-chain bytes32 hex or uuid
+  serviceId            String
+  service              Service       @relation(fields: [serviceId], references: [id])
+  planId               String
+  plan                 ServicePlan   @relation(fields: [planId], references: [id])
+  customerAddress      String
+  providerAddress      String
+  totalFundedUsdc      Float
+  spentAmountUsdc      Float         @default(0)
+  refundedAmountUsdc   Float         @default(0)
+  currentEpoch         Int           @default(1)
+  epochDurationSeconds Int           @default(3600)
+  circuitPolicyId      String
+  status               String        @default("ACTIVE") // PENDING_DEPOSIT, ACTIVE, SETTLED, REFUNDED, DISPUTED, TERMINATED
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  gatewayKeys          GatewayKey[]
+  usageReceipts        UsageReceiptRecord[]
+  witnessReports       WitnessReportRecord[]
+  settlements          SettlementRecord[]
+  disputes             DisputeRecord[]
+}
+
+model GatewayKey {
+  id           String    @id @default(uuid())
+  agreementId  String
+  agreement    Agreement @relation(fields: [agreementId], references: [id])
+  keyPrefix    String    @unique
+  hashedSecret String
+  status       String    @default("ACTIVE") // ACTIVE, REVOKED
+  createdAt    DateTime  @default(now())
+}
+
+model UsageReceiptRecord {
+  id           String    @id @default(uuid())
+  agreementId  String
+  agreement    Agreement @relation(fields: [agreementId], references: [id])
+  epochId      Int
+  requestId    String    @unique
+  timestamp    DateTime
+  latencyMs    Int
+  statusCode   Int
+  requestHash  String
+  responseHash String
+  signature    String
+  createdAt    DateTime  @default(now())
+
+  @@index([agreementId, epochId])
+}
+
+model WitnessReportRecord {
+  id               String    @id @default(uuid())
+  agreementId      String
+  agreement        Agreement @relation(fields: [agreementId], references: [id])
+  epochId          Int
+  chainId          Int
+  witnessAddress   String
+  measurementStart DateTime
+  measurementEnd   DateTime
+  observationCount Int
+  availabilityPpm  Int
+  p95LatencyMs     Int
+  evidenceHash     String
+  reportNonce      Int
+  deadline         DateTime
+  signature        String
+  createdAt        DateTime  @default(now())
+
+  @@unique([agreementId, epochId, witnessAddress])
+}
+
+model SettlementRecord {
+  id                 String    @id @default(uuid())
+  agreementId        String
+  agreement          Agreement @relation(fields: [agreementId], references: [id])
+  epochId            Int
+  circuitOutput      Boolean
+  outcome            String    // PAYOUT_PROVIDER, REFUND_CUSTOMER
+  providerPayoutUsdc Float
+  customerRefundUsdc Float
+  protocolFeeUsdc    Float
+  txHash             String?
+  blockNumber        Int?
+  settledAt          DateTime  @default(now())
+
+  @@unique([agreementId, epochId])
+}
+
+model DisputeRecord {
+  id              String    @id @default(uuid())
+  agreementId     String
+  agreement       Agreement @relation(fields: [agreementId], references: [id])
+  epochId         Int
+  claimantAddress String
+  reason          String
+  evidenceUri     String
+  status          String    @default("OPEN") // OPEN, UPHELD, DISMISSED
+  createdAt       DateTime  @default(now())
+  resolvedAt      DateTime?
+
+  @@unique([agreementId, epochId])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actor     String
+  action    String
+  entity    String
+  entityId  String
+  metadata  String?  // JSON string
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+

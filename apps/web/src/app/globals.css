@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+:root {
+  --background: #09090b;
+  --surface: #0f0f12;
+  --surface-raised: #141418;
+  --surface-border: rgba(255,255,255,0.07);
+  --foreground: #e4e4e7;
+  --muted: #71717a;
+
+  /* Brand — sharp amber/orange instead of generic cyan */
+  --amber: #f59e0b;
+  --amber-dim: #d97706;
+  --orange: #ea580c;
+  --teal: #0d9488;
+  --indigo: #6366f1;
+  --rose: #e11d48;
+  --emerald: #10b981;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Headings use Syne — geometric, confident, not AI */
+h1, h2, h3, h4, h5 {
+  font-family: 'Syne', system-ui, sans-serif;
+}
+
+/* Mono text */
+code, pre, .font-mono {
+  font-family: 'DM Mono', 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+/* ─── Glow utilities ───────────────────────────────── */
+.glow-amber {
+  box-shadow: 0 0 24px -4px rgba(245, 158, 11, 0.4);
+}
+.glow-indigo {
+  box-shadow: 0 0 24px -4px rgba(99, 102, 241, 0.3);
+}
+.glow-teal {
+  box-shadow: 0 0 24px -4px rgba(13, 148, 136, 0.3);
+}
+
+/* ─── Noise texture overlay ────────────────────────── */
+.noise-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ─── Grid pattern ─────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ─── Animated gradient border ─────────────────────── */
+@keyframes border-spin {
+  to { --angle: 360deg; }
+}
+
+/* ─── Selection ────────────────────────────────────── */
+::selection {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+
+/* ─── Smooth tab underline ─────────────────────────── */
+.tab-active {
+  position: relative;
+}
+.tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--amber);
+  border-radius: 2px 2px 0 0;
+}
+
+/* ─── Terminal blink cursor ────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cursor-blink {
+  animation: blink 1.1s step-end infinite;
+}
+
+/* ─── Number counter animation ─────────────────────── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.count-animate {
+  animation: count-up 0.5s ease forwards;
+}
+
+/* ─── Shimmer loading ──────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #18181b 0px, #27272a 40px, #18181b 80px);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* ─── Status pulse ─────────────────────────────────── */
+@keyframes status-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.status-pulse {
+  animation: status-pulse 2s infinite;
+}

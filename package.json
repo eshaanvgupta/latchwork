@@ -1,0 +1,32 @@
+{
+  "name": "latchwork-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LATCHWORK - Services prove performance. Circuits enforce payment.",
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "build:packages": "pnpm --filter \"./packages/*\" build",
+    "build": "pnpm --filter \"./packages/*\" build && pnpm --filter \"./apps/*\" build",
+    "test": "pnpm --filter @latchwork/shared test && pnpm --filter @latchwork/circuit-compiler test && pnpm --filter @latchwork/tapeout-adapter test && pnpm --filter @latchwork/sdk test && pnpm --filter @latchwork/gateway test && pnpm --filter @latchwork/monitor test && pnpm --filter @latchwork/api test",
+    "test:contracts": "cd packages/contracts && forge test -vvv",
+    "test:integration": "node scripts/smoke-local.mjs",
+    "demo": "node scripts/demo-e2e.js",
+    "lint": "pnpm -r lint",
+    "db:setup": "node --env-file=.env --run db:setup:commands",
+    "db:setup:commands": "pnpm --filter @latchwork/database db:push && pnpm --filter @latchwork/database seed",
+    "dev:all": "node --env-file=.env --run dev:services",
+    "dev:services": "concurrently \"pnpm --filter @latchwork/api dev\" \"pnpm --filter @latchwork/gateway dev\" \"pnpm --filter @latchwork/monitor dev\" \"pnpm --filter @latchwork/web dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "viem": "^2.57.16",
+    "@latchwork/shared": "workspace:*",
+    "@latchwork/circuit-compiler": "workspace:*",
+    "@latchwork/tapeout-adapter": "workspace:*"
+  }
+}

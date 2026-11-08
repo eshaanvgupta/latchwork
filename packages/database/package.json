@@ -1,0 +1,23 @@
+{
+  "name": "@latchwork/database",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "generate": "prisma generate",
+    "db:push": "node scripts/prepare-sqlite.mjs && prisma db push --skip-generate",
+    "seed": "node dist/seed.js",
+    "build": "prisma generate && tsc"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.3.1",
+    "@latchwork/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "prisma": "^6.3.1",
+    "typescript": "^5.7.3"
+  }
+}

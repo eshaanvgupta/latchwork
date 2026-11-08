@@ -1,0 +1,11 @@
+.git
+**/node_modules
+**/.next
+**/dist
+**/out
+**/cache
+**/.env
+**/.env.*
+**/*.db
+**/*.sqlite
+**/*.log

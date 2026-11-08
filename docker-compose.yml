@@ -1,0 +1,63 @@
+# Local sandbox. GitHub Pages hosts only the static web preview.
+x-sandbox-environment: &sandbox-environment
+  NODE_ENV: development
+  HOST: 0.0.0.0
+  DATABASE_URL: file:/data/latchwork.db
+  ALLOW_LOCAL_UPSTREAMS: 'true'
+
+services:
+  init:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      <<: *sandbox-environment
+      TEST_SERVICE_URL: http://monitor:4002
+    volumes: [latchwork_data:/data]
+    command: ["sh", "-c", "cd packages/database && ./node_modules/.bin/prisma db push && node dist/seed.js"]
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports: ["127.0.0.1:4000:4000"]
+    environment:
+      <<: *sandbox-environment
+      PORT: 4000
+      MONITOR_URL: http://monitor:4003
+    volumes: [latchwork_data:/data]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+  gateway:
+    build:
+      context: .
+      dockerfile: apps/gateway/Dockerfile
+    ports: ["127.0.0.1:4001:4001"]
+    environment:
+      <<: *sandbox-environment
+      GATEWAY_PORT: 4001
+    volumes: [latchwork_data:/data]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+  monitor:
+    build:
+      context: .
+      dockerfile: apps/monitor/Dockerfile
+    ports: ["127.0.0.1:4002:4002", "127.0.0.1:4003:4003"]
+    environment:
+      <<: *sandbox-environment
+      MONITOR_PORT: 4003
+      TEST_SERVICE_PORT: 4002
+    volumes: [latchwork_data:/data]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: [api]
+volumes:
+  latchwork_data:

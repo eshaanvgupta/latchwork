@@ -1,0 +1,40 @@
+name: Verify LATCHWORK
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+      - run: forge test -vvv --fuzz-runs 256
+        working-directory: packages/contracts
+  application:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: file:./ci.db
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build:packages
+      - run: pnpm --filter @latchwork/database db:push
+      - run: pnpm --filter @latchwork/database seed
+      - run: pnpm test
+      - run: pnpm --filter './apps/*' build
+        env:
+          NODE_ENV: production
+      - run: pnpm test:integration
