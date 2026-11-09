@@ -100,7 +100,7 @@ export default function CreateServicePage() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="narrow-shell">
       {/* Back */}
       <Link href="/marketplace" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors mb-8 group">
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
@@ -108,12 +108,12 @@ export default function CreateServicePage() {
       </Link>
 
       {/* Header */}
-      <div className="mb-8">
+      <div className="page-heading mb-8">
         <div className="flex items-center gap-2 text-xs font-mono text-amber-400 uppercase tracking-wider mb-2">
           <PlusCircle className="w-4 h-4" />
           Provider Portal
         </div>
-        <h1 className="font-display text-3xl font-bold text-white mb-2">Register Service</h1>
+        <h1 className="font-display text-3xl font-bold leading-tight text-white mb-3 sm:text-4xl">Register Service</h1>
         <p className="text-zinc-400 text-sm max-w-xl">
           Register your API and SLA plan in the connected backend, then verify ownership through an HTTP challenge.
         </p>
@@ -121,7 +121,7 @@ export default function CreateServicePage() {
 
       {error && <p role="alert" className="mb-5 rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-sm text-rose-300">{error}</p>}
       {/* Step indicators */}
-      <div className="grid grid-cols-3 gap-3 mb-10">
+      <div className="grid grid-cols-1 gap-3 mb-10 sm:grid-cols-3">
         {steps.map(s => (
           <div key={s.n} className={`p-3 rounded-xl border text-center transition-all ${
             step === s.n

@@ -28,9 +28,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['Syne', 'system-ui', 'sans-serif'],
-        sans: ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['DM Mono', 'JetBrains Mono', 'Fira Code', 'monospace'],
+        display: ['Archivo Variable', 'Archivo', 'system-ui', 'sans-serif'],
+        sans: ['Archivo Variable', 'Archivo', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['Spline Sans Mono Variable', 'Spline Sans Mono', 'monospace'],
       },
       backgroundImage: {
         'grid-pattern': `

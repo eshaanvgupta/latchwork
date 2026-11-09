@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
-
 :root {
   --background: #09090b;
   --surface: #0f0f12;
@@ -33,20 +31,91 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Archivo Variable', 'Archivo', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* Headings use Syne — geometric, confident, not AI */
 h1, h2, h3, h4, h5 {
-  font-family: 'Syne', system-ui, sans-serif;
+  font-family: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  text-wrap: balance;
 }
 
-/* Mono text */
 code, pre, .font-mono {
-  font-family: 'DM Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: 'Spline Sans Mono Variable', 'Spline Sans Mono', monospace;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+@layer components {
+  .site-container {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .page-shell {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .narrow-shell {
+    width: 100%;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .page-heading {
+    max-width: 48rem;
+  }
+
+  .page-heading > p {
+    max-width: 42rem;
+    line-height: 1.65;
+  }
+
+  .content-panel {
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 1rem;
+    background: rgba(15,15,18,0.88);
+  }
+}
+
+@media (min-width: 640px) {
+  .site-container,
+  .page-shell,
+  .narrow-shell {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container,
+  .page-shell,
+  .narrow-shell {
+    padding-inline: 2rem;
+  }
+
+  .page-shell,
+  .narrow-shell {
+    padding-top: 3.5rem;
+    padding-bottom: 5rem;
+  }
 }
 
 /* ─── Scrollbar ─────────────────────────────────────── */

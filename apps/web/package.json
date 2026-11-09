@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource-variable/archivo": "5.3.0",
+    "@fontsource-variable/spline-sans-mono": "5.3.0",
     "@latchwork/circuit-compiler": "workspace:*",
     "@latchwork/contracts": "workspace:*",
     "@latchwork/sdk": "workspace:*",

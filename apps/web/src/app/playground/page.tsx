@@ -51,9 +51,9 @@ export default function PlaygroundPage() {
   };
 
   const input = 'w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 font-mono text-sm text-zinc-200';
-  return <div className="mx-auto max-w-7xl px-4 py-10 space-y-6">
-    <div><div className="text-xs font-mono text-amber-400 flex items-center gap-2 mb-2"><Terminal className="h-4 w-4" /> DEVELOPER PLAYGROUND</div><h1 className="font-display text-3xl font-bold">Send an authenticated request</h1><p className="text-sm text-zinc-400 mt-2">Forwards real traffic through your configured gateway. Receipts are separate from witness reports and settlement authorization.</p></div>
-    <div className="grid lg:grid-cols-2 gap-5"><section className="rounded-2xl border border-white/10 bg-surface p-5 space-y-4">
+  return <div className="page-shell space-y-7">
+    <div className="page-heading"><div className="text-xs font-mono text-amber-400 flex items-center gap-2 mb-2"><Terminal className="h-4 w-4" /> DEVELOPER PLAYGROUND</div><h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Send an authenticated request</h1><p className="text-sm text-zinc-400 mt-3">Forwards real traffic through your configured gateway. Receipts are separate from witness reports and settlement authorization.</p></div>
+    <div className="grid items-start gap-5 lg:grid-cols-2"><section className="content-panel p-5 space-y-4 sm:p-6">
       <p className="text-xs font-mono text-zinc-500 break-all">Gateway: {GATEWAY_URL}</p>
       <label className="block text-sm text-zinc-400">Service slug<input className={`${input} mt-2`} value={serviceSlug} onChange={event => setServiceSlug(event.target.value)} /></label>
       <label className="block text-sm text-zinc-400">Gateway API key<input type="password" autoComplete="off" className={`${input} mt-2`} value={apiKey} onChange={event => setApiKey(event.target.value)} placeholder="lw_live_…" /></label>
@@ -62,7 +62,7 @@ export default function PlaygroundPage() {
       <button disabled={loading} onClick={send} className="flex gap-2 items-center rounded-xl bg-amber-400 px-4 py-3 text-black font-semibold text-sm disabled:opacity-50"><Play className="h-4 w-4" />{loading ? 'Sending…' : 'Send request'}</button>
       {error && <p role="alert" className="text-sm text-rose-400 break-all">{error}</p>}
       <p className="text-xs text-zinc-500">Last browser round trips: {history.length ? history.map(value => `${value} ms`).join(' · ') : 'No requests sent.'}</p>
-    </section><section className="rounded-2xl border border-white/10 bg-surface p-5 space-y-4">
+    </section><section className="content-panel p-5 space-y-4 sm:p-6">
       <div className="flex justify-between items-center"><h2 className="font-semibold">Gateway response</h2>{response && <button aria-label="Copy response" onClick={() => navigator.clipboard.writeText(JSON.stringify(response, null, 2))}><Copy className="h-4 w-4 text-zinc-400" /></button>}</div>
       <pre className="rounded-lg bg-black/30 p-4 font-mono text-xs text-zinc-300 whitespace-pre-wrap break-all min-h-36 max-h-80 overflow-auto">{response ? JSON.stringify(response, null, 2) : 'No response yet.'}</pre>
       <h2 className="font-semibold flex gap-2 items-center"><Shield className="h-4 w-4 text-indigo-400" /> Receipt returned by gateway</h2>

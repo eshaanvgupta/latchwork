@@ -274,12 +274,12 @@ export default function MarketplacePage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10">
+    <div className="page-shell">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-zinc-100">Service Marketplace</h1>
-          <p className="mt-1 text-sm text-zinc-500">
+      <div className="flex flex-col items-start justify-between gap-5 mb-8 sm:flex-row sm:items-end">
+        <div className="page-heading">
+          <h1 className="font-display text-3xl font-bold leading-tight text-zinc-100 sm:text-4xl">Service Marketplace</h1>
+          <p className="mt-3 text-sm text-zinc-500">
             Discover verified APIs with TapeOut circuit-enforced SLAs.
             <span className="ml-2 text-zinc-700 font-mono text-[11px]">{filtered.length} services</span>
           </p>

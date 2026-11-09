@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next';
+import '@fontsource-variable/archivo';
+import '@fontsource-variable/spline-sans-mono';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Providers } from '@/components/Providers';
@@ -34,14 +36,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }}
             />
             <Navbar />
-            <div className="relative z-10 border-y border-amber-500/20 bg-amber-500/10 px-4 py-3 text-center text-xs text-amber-200">
-              Hackathon prototype. Policy Studio compiles and simulates locally. Marketplace samples are illustrative; escrow funding and withdrawals are not connected in this UI. Backend features require configured services.
+            <div className="relative z-10 border-y border-amber-500/20 bg-amber-500/10 text-xs text-amber-200">
+              <div className="site-container py-3 text-left leading-relaxed sm:text-center">
+                Hackathon prototype. Policy Studio compiles and simulates locally. Marketplace samples are illustrative; escrow funding and withdrawals are not connected in this UI. Backend features require configured services.
+              </div>
             </div>
             <main className="relative z-10 flex-1">{children}</main>
             <footer className="relative z-10 border-t border-white/5 bg-surface/60 backdrop-blur-sm">
-              <div className="mx-auto max-w-7xl px-4 py-6">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-3 text-xs">
+              <div className="site-container py-6">
+                <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs">
                     <span className="font-display font-semibold tracking-wide text-zinc-300">LATCHWORK</span>
                     <span className="text-zinc-700">|</span>
                     <span className="text-zinc-500 font-mono">X Layer Mainnet · Chain 196</span>

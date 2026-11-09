@@ -70,9 +70,9 @@ export function Navbar() {
             : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 h-14">
+        <div className="site-container flex h-16 items-center justify-between">
           {/* Brand */}
-          <div className="flex items-center gap-8">
+          <div className="flex min-w-0 items-center gap-7">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="relative flex h-7 w-7 items-center justify-center rounded-md bg-brand-amber text-black shadow-amber-sm">
                 <Cpu className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -86,7 +86,7 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-0.5">
+            <nav className="hidden items-center gap-0.5 xl:flex">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -215,7 +215,7 @@ export function Navbar() {
             <button
               aria-label="Toggle navigation menu"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-1.5 rounded-md text-zinc-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+              className="xl:hidden p-1.5 rounded-md text-zinc-400 hover:text-white hover:bg-white/[0.05] transition-colors"
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -223,10 +223,10 @@ export function Navbar() {
         </div>
       </header>
 
-      {error && <div role="alert" className="mx-auto max-w-7xl px-4 py-2 text-sm text-rose-400">{error}</div>}
+      {error && <div role="alert" className="site-container py-2 text-sm text-rose-400">{error}</div>}
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
+        <div className="fixed inset-0 z-40 xl:hidden">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
           <div className="absolute right-0 top-0 bottom-0 w-72 bg-surface-raised border-l border-white/[0.07] p-6 flex flex-col gap-2 shadow-2xl">
             <div className="flex items-center justify-between mb-4">

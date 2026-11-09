@@ -165,7 +165,7 @@ export default function HomePage() {
         {/* Fade out at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-16 sm:pt-28 sm:pb-24">
+        <div className="site-container relative pt-16 pb-16 sm:pt-24 sm:pb-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left — text */}
             <div>
@@ -260,7 +260,7 @@ export default function HomePage() {
 
       {/* ── Stats row ─────────────────────────────────────────────────────── */}
       <section className="border-y border-white/[0.05] bg-surface/40">
-        <div className="mx-auto max-w-7xl px-4 py-8">
+        <div className="site-container py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {mounted && stats.map((s, i) => (
               <div key={i} className="text-center">
@@ -281,7 +281,7 @@ export default function HomePage() {
       </section>
 
       {/* ── How it works ──────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-7xl px-4 py-24">
+      <section className="site-container py-20 sm:py-24">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-1 text-[11px] font-mono text-zinc-500 mb-4">
             HOW IT WORKS
@@ -353,7 +353,7 @@ export default function HomePage() {
 
       {/* ── Features grid ─────────────────────────────────────────────────── */}
       <section className="border-t border-white/[0.05] bg-surface/30 py-24">
-        <div className="mx-auto max-w-7xl px-4">
+        <div className="site-container">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Large featured tile */}
             <div className="lg:col-span-2 rounded-2xl border border-brand-amber/15 bg-gradient-to-br from-brand-amber/5 to-transparent p-8 relative overflow-hidden">
@@ -425,7 +425,7 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA Banner ────────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-7xl px-4 py-24">
+      <section className="site-container py-20 sm:py-24">
         <div className="relative overflow-hidden rounded-3xl border border-white/[0.07] bg-gradient-to-br from-surface-raised to-surface px-8 py-16 text-center">
           <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-50" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-1/2 bg-gradient-to-r from-transparent via-brand-amber/50 to-transparent" />
