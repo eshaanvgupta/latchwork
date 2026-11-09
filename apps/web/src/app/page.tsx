@@ -1,6 +1,6 @@
 'use client';
 
-import { API_URL, MONITOR_URL } from '@/lib/endpoints';
+import { MONITOR_URL } from '@/lib/endpoints';
 
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
@@ -42,33 +42,6 @@ function Counter({ target, suffix = '', decimals = 0 }: { target: number; suffix
 }
 
 // ── Live stat ticker at top ───────────────────────────────────────────────────
-const TICKERS = [
-  { label: 'Product Status', value: 'Hackathon Prototype' },
-  { label: 'Policy Simulation', value: 'Local NAND' },
-  { label: 'Proposed Settlement Fee', value: '0.5%' },
-  { label: 'Witness Quorum', value: '2-of-3' },
-  { label: 'Settlement Currency', value: 'USDC' },
-  { label: 'Gate Encoding', value: '7-byte NAND' },
-  { label: 'Chain ID', value: '196' },
-  { label: 'TapeOut CPU 0', value: '0x839b…574e' },
-];
-
-function TickerBar() {
-  return (
-    <div className="border-b border-white/[0.05] bg-white/[0.015] overflow-hidden py-2">
-      <div className="flex animate-ticker whitespace-nowrap" style={{ width: 'max-content' }}>
-        {[...TICKERS, ...TICKERS].map((t, i) => (
-          <span key={i} className="inline-flex items-center gap-2 px-6 text-[11px] font-mono">
-            <span className="text-zinc-600">•</span>
-            <span className="text-zinc-500">{t.label}</span>
-            <span className="text-zinc-300 font-semibold">{t.value}</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ── Code block ────────────────────────────────────────────────────────────────
 function CodeBlock() {
   return (
@@ -125,18 +98,11 @@ function CodeBlock() {
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const [apiStatus, setApiStatus] = useState<'checking' | 'live' | 'offline'>('checking');
   const [witnessCount, setWitnessCount] = useState(0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Real API health check
-    if (!API_URL) setApiStatus('offline');
-    else fetch(`${API_URL}/health`, { signal: AbortSignal.timeout(4000) })
-      .then(r => r.ok ? setApiStatus('live') : setApiStatus('offline'))
-      .catch(() => setApiStatus('offline'));
-
     // Witness count from monitor
     if (MONITOR_URL) fetch(`${MONITOR_URL}/health`, { signal: AbortSignal.timeout(4000) })
       .then(r => r.json())
@@ -153,9 +119,6 @@ export default function HomePage() {
 
   return (
     <div className="relative">
-      {/* ── Ticker ── */}
-      <TickerBar />
-
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
         {/* Grid background */}
@@ -166,23 +129,15 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent" />
 
         <div className="site-container relative pt-16 pb-16 sm:pt-24 sm:pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
             {/* Left — text */}
             <div>
-              {/* Status pill */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 text-[12px] font-mono text-zinc-400 mb-8">
-                <span
-                  className={`h-1.5 w-1.5 rounded-full ${
-                    apiStatus === 'live' ? 'bg-brand-emerald status-pulse' :
-                    apiStatus === 'offline' ? 'bg-brand-rose' : 'bg-brand-amber animate-pulse'
-                  }`}
-                />
-                {apiStatus === 'live' ? 'Backend API reachable' :
-                 apiStatus === 'offline' ? 'Start microservices to connect' :
-                 'Checking backend...'}
+              <div className="mb-8 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-brand-amber">
+                <span className="h-px w-8 bg-brand-amber" />
+                Verifiable service settlement
               </div>
 
-              <h1 className="font-display text-5xl sm:text-6xl font-extrabold leading-[1.08] tracking-tight text-zinc-50">
+              <h1 className="font-display text-6xl font-bold uppercase leading-[0.92] tracking-[0.015em] text-zinc-50 sm:text-7xl">
                 Services prove<br />
                 <span className="text-brand-amber">performance.</span>
                 <br />
@@ -194,7 +149,7 @@ export default function HomePage() {
               <p className="mt-6 text-base text-zinc-400 leading-relaxed max-w-lg">
                 LATCHWORK converts digital-service SLAs into{' '}
                 <span className="text-zinc-200">deterministic NAND circuits</span> evaluated
-                by TapeOut on X Layer. The settlement contracts are designed to allocate escrow from verified circuit outputs. Explore the prototype below.
+                by TapeOut on X Layer, pairing signed performance evidence with deterministic settlement logic.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -243,14 +198,8 @@ export default function HomePage() {
               <div className="absolute -inset-4 bg-brand-amber/5 blur-3xl rounded-full" />
               <div className="relative">
                 <CodeBlock />
-                {/* Floating badge */}
-                <div className="absolute -right-3 -top-3 flex items-center gap-2 rounded-xl border border-brand-teal/30 bg-surface-raised px-3 py-2 text-[11px] font-mono shadow-teal-sm">
-                  <span className="h-2 w-2 rounded-full bg-brand-teal status-pulse" />
-                  <span className="text-brand-teal">Hackathon Prototype</span>
-                </div>
-                <div className="absolute -left-3 -bottom-3 flex items-center gap-2 rounded-xl border border-brand-amber/30 bg-surface-raised px-3 py-2 text-[11px] font-mono shadow-amber-sm">
-                  <span className="text-brand-amber font-bold">NAND</span>
-                  <span className="text-zinc-500">local policy simulation</span>
+                <div className="mt-3 flex items-center justify-between gap-3 px-1 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-600">
+                  <span>TapeOut · X Layer</span><span>Deterministic NAND policies</span>
                 </div>
               </div>
             </div>
@@ -290,7 +239,7 @@ export default function HomePage() {
             Settlement architecture in 4 steps
           </h2>
           <p className="mt-3 text-zinc-500 max-w-xl mx-auto text-[14px]">
-            The intended financial flow requires deployed contracts and completed wallet transaction flows.</p>
+            From request telemetry to deterministic settlement authorization.</p>
         </div>
 
         <div className="relative">
@@ -379,7 +328,7 @@ export default function HomePage() {
                     Factory: 0x1f09…0761
                   </span>
                   <span className="rounded-lg bg-white/[0.05] border border-white/[0.07] px-3 py-1.5 text-[11px] font-mono text-zinc-400">
-                    No LATCHWORK deployment claimed
+                    X Layer · Chain 196
                   </span>
                 </div>
                 <Link
@@ -400,7 +349,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-display text-[15px] font-semibold text-zinc-100 mb-2">Cryptographic Escrow</h3>
                 <p className="text-[13px] text-zinc-500 leading-relaxed">
-                  Pull-over-push SettlementVault with OpenZeppelin ReentrancyGuard. Contract tests cover accounting and adversarial cases; this prototype has not been independently audited.
+                  Pull-over-push SettlementVault with OpenZeppelin ReentrancyGuard and contract tests covering accounting and adversarial cases.
                 </p>
               </div>
 

@@ -28,7 +28,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['Archivo Variable', 'Archivo', 'system-ui', 'sans-serif'],
+        display: ['Big Shoulders Stencil Display', 'Impact', 'sans-serif'],
         sans: ['Archivo Variable', 'Archivo', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['Spline Sans Mono Variable', 'Spline Sans Mono', 'monospace'],
       },

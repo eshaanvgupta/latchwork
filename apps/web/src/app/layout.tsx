@@ -1,14 +1,15 @@
 import type { Metadata, Viewport } from 'next';
 import '@fontsource-variable/archivo';
+import '@fontsource-variable/big-shoulders-stencil-display';
 import '@fontsource-variable/spline-sans-mono';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Providers } from '@/components/Providers';
 
 export const metadata: Metadata = {
-  title: 'LATCHWORK — Services prove performance. Circuits enforce payment.',
+  title: 'LATCHWORK — Verifiable service settlement on X Layer',
   description:
-    'Programmable settlement infrastructure for digital services on X Layer. Compile and simulate TapeOut settlement policies in a hackathon prototype.',
+    'Programmable settlement infrastructure for digital services on X Layer, powered by TapeOut circuits.',
   keywords: ['TapeOut', 'X Layer', 'Web3', 'API settlement', 'SLA', 'USDC escrow', 'DeFi'],
   openGraph: {
     title: 'LATCHWORK',
@@ -36,11 +37,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }}
             />
             <Navbar />
-            <div className="relative z-10 border-y border-amber-500/20 bg-amber-500/10 text-xs text-amber-200">
-              <div className="site-container py-3 text-left leading-relaxed sm:text-center">
-                Hackathon prototype. Policy Studio compiles and simulates locally. Marketplace samples are illustrative; escrow funding and withdrawals are not connected in this UI. Backend features require configured services.
-              </div>
-            </div>
             <main className="relative z-10 flex-1">{children}</main>
             <footer className="relative z-10 border-t border-white/5 bg-surface/60 backdrop-blur-sm">
               <div className="site-container py-6">
@@ -51,10 +47,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <span className="text-zinc-500 font-mono">X Layer Mainnet · Chain 196</span>
                     <span className="text-zinc-700">|</span>
                     <span className="text-zinc-500 font-mono text-[11px]">TapeOut CPU 0x839b...574e</span>
-                    <span className="flex items-center gap-1 ml-1">
-                      <span className="h-1.5 w-1.5 rounded-full bg-brand-emerald status-pulse" />
-                      <span className="text-brand-emerald font-mono text-[10px]">PROTOTYPE</span>
-                    </span>
                   </div>
                   <div className="text-xs text-zinc-600 font-mono tracking-tight">
                     Services prove performance. Circuits enforce payment.

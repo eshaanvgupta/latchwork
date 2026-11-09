@@ -225,7 +225,7 @@ function ServiceCard({ service, expanded, onToggle }: {
             href="/agreements"
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-amber px-4 py-3 text-sm font-semibold text-black hover:bg-amber-400 transition-all shadow-amber-sm"
           >
-            View Agreement Prototype
+            View agreement
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

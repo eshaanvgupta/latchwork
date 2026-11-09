@@ -39,7 +39,8 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  letter-spacing: 0.025em;
   text-wrap: balance;
 }
 
@@ -61,31 +62,31 @@ textarea {
 @layer components {
   .site-container {
     width: 100%;
-    max-width: 80rem;
+    max-width: 72rem;
     margin-inline: auto;
     padding-inline: 1rem;
   }
 
   .page-shell {
     width: 100%;
-    max-width: 80rem;
+    max-width: 72rem;
     margin-inline: auto;
     padding: 2.5rem 1rem 4rem;
   }
 
   .narrow-shell {
     width: 100%;
-    max-width: 64rem;
+    max-width: 72rem;
     margin-inline: auto;
     padding: 2.5rem 1rem 4rem;
   }
 
   .page-heading {
-    max-width: 48rem;
+    max-width: 44rem;
   }
 
   .page-heading > p {
-    max-width: 42rem;
+    max-width: 40rem;
     line-height: 1.65;
   }
 
@@ -93,6 +94,10 @@ textarea {
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 1rem;
     background: rgba(15,15,18,0.88);
+  }
+
+  .narrow-shell > * {
+    max-width: 52rem;
   }
 }
 
